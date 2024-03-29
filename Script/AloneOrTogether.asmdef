@@ -1,0 +1,25 @@
+{
+    "name": "AloneOrTogether",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:57c32fc907df0f54e8e6e8f0d2488336",
+        "GUID:a738238285a7a8246af046cbf977522f",
+        "GUID:4025d00f1ce60da4ea2d0830acf5ebfb",
+        "GUID:831409e8f9d13b5479a3baef9822ad34",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:513b45211f1771746b7aabe5d0e08312"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

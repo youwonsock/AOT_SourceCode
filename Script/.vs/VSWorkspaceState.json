@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Scene",
+    "\\Scene\\Stage02",
+    "\\Scene\\StartScene",
+    "\\Scriptable Object",
+    "\\Scriptable Object\\Scripts",
+    "\\Scriptable Object\\Tutorial",
+    "\\Traps",
+    "\\Traps\\Projectile",
+    "\\Traps\\Trigger"
+  ],
+  "SelectedNode": "\\Scene\\Credit\\Door.cs",
+  "PreviewInSolutionExplorer": false
+}

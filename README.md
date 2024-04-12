@@ -45,7 +45,7 @@
   * GameManager   
     게임의 전체적인 흐름을 관리하는 매니저
     <details>
-    <summary>GameManager</summary>
+    <summary>GameManager Code</summary>
     <div markdown="1">
 
       ```c#
@@ -230,7 +230,7 @@
     최적화를 위해 각 컴포넌트에서 Update를 호출하는 것이 아닌 UpdateManager에 이벤트로 등록하여  
     UpdateManager에서 Update를 호출하는 방식으로 구현하였습니다.
     <details>
-    <summary>UpdateManager</summary>
+    <summary>UpdateManager Code</summary>
     <div markdown="1">
 
       ```c#
@@ -349,7 +349,7 @@
     오브젝트 풀링을 위한 매니저입니다.  
     오브젝트 풀에 오브젝트가 없는 경우 동적으로 생성하여 사용하고, 사용이 끝난 오브젝트는 오브젝트 풀에 반환합니다.  
     <details>
-    <summary>ObjectPool</summary>
+    <summary>ObjectPool Code</summary>
     <div markdown="1">
 
       ```c#
@@ -514,7 +514,7 @@
   * AudioManager  
     게임 내에서 사용되는 사운드를 관리하는 매니저입니다.
     <details>
-    <summary>AudioManager</summary>
+    <summary>AudioManager Code</summary>
     <div markdown="1">
 
       ```c#
@@ -873,7 +873,7 @@
   플레이어 애니메이션 및 이동, 카메라 처리를 구현했습니다.  
   Unity의 InputSystem을 사용하여 플레이어 Input 처리 스크립트를 작성하였습니다.  
     <details>
-    <summary>PlayerInput</summary>
+    <summary>PlayerInput Code</summary>
     <div markdown="1">
 
       ```c#

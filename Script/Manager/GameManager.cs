@@ -166,9 +166,5 @@ public class GameManager : Singleton<GameManager>
         //Cursor.visible = false;
     }
 
-    private void Update()
-    {
-    }
-
     #endregion
 }

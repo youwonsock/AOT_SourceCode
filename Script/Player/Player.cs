@@ -42,7 +42,6 @@ public class Player : MonoBehaviourPunCallbacks, IDamageAble, IPunObservable
     public UI_PlayerView _view;
     [SerializeField] private GameObject view;
     private UI_Presenter presenter;
-    private Player _player;
 
     // FP Anim
     CharAnimData animData;
@@ -222,9 +221,8 @@ public class Player : MonoBehaviourPunCallbacks, IDamageAble, IPunObservable
         //view = GameObject.FindGameObjectWithTag("Heart");
         _view = view.GetComponent<UI_PlayerView>();
 
-        TryGetComponent<Player>(out _player);
         TryGetComponent<UI_Presenter>(out presenter);
-        presenter.connect_mvp(_player, _view);
+        presenter.connect_mvp(_view);
         // --------------ui----------------------------
 
 
@@ -305,7 +303,6 @@ public class Player : MonoBehaviourPunCallbacks, IDamageAble, IPunObservable
         
         // camera
         playerCamera.CameraRotation(input);
-
 
         //Fp anim
         animData.moveInput = input.Move;

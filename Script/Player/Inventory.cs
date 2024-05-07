@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField] public List<Item> itemInventory = new List<Item>();
+    [SerializeField] private List<Item> itemInventory = new List<Item>();
     [SerializeField] private int inventorySize = 2;
     UI_Inventory ivt;
 

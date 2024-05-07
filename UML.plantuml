@@ -1,0 +1,146 @@
+
+@startuml
+
+class GameManager
+{   
+    game data
+    +animation hash values
+
+    +void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    +void AddOnSceneLoaded(UnityAction<Scene, LoadSceneMode> action)
+    +void RemoveOnSceneLoaded(UnityAction<Scene, LoadSceneMode> action)
+}   
+
+class UpdateManager
+{
+    -static event Action OnUpdate;
+    -static event Action OnFixedUpdate;
+    -static event Action OnLateUpdate;
+
+    +static void SubscribeToUpdate(Action callback)
+    +static void UnsubscribeFromUpdate(Action callback)
+}
+
+class Player
+{
+    -int health
+    -int maxHealth
+
+    -UI_PlayerView view
+    +Action onDeath
+
+    +void TakeDamage(Vector3 hitPoint, float damage, float knockbackForce)
+    +void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+}
+
+class PlayerInput
+{
+    -bool valueInputs
+    -Vector2 axisInputs
+
+    +void InputContextFunctions(InputAction.CallbackContext context)
+}
+
+class PlayerCamera
+{
+    float topClamp
+    float bottomClamp
+    float sensitivity
+    Transform TPCamTarget
+    Transform FPCamTarget
+
+    void CameraRotation(PlayerInput input)
+}
+
+class Inventory
+{
+    -List<Item> itemInventory
+    -int inventorySize
+    -UI_Inventory inventoryView
+
+    +void AddItemToInventory(Item item)
+    +void UseItem()
+}
+
+class GrapplingHook
+{
+    -Transform firePos
+    -float grapplingDistance
+
+    +void Grappling(P_Input input, Rigidbody rigid, bool isGround)
+    +async UniTaskVoid ChangeHookState()
+    -bool SetGrapplingPoint()
+    -void Swing()
+    -async UniTaskVoid Hook(Rigidbody rigidbody)
+}
+
+class Projectile
+{
+    -Projectile_SO projectileData
+    -Rigidbody rigid
+
+    +void SetProjectile(Vector3 shootDirection, Vector3 shootPos)
+}
+
+class ProjectileDispenser
+{
+    -ProjectileDispenser_SO projectileDispenserData
+    -CancellationTokenSource _source
+
+    -async UniTaskVoid FireProjectile(Vector3 fireDir)
+    +void ActivateObject(Vector3 triggerPos)
+}
+
+class Projectile_SO
+{
+    -string projectileName;
+    -float damage;
+    -float projectileSpeed;
+    -float lifeTime;
+    -float knockbackForce;
+    -bool isStraight;
+    -int projectileType = -1;
+}
+
+class ProjectileDispenser_SO
+{
+
+    -string projectileName;
+    -bool fireOnStart;
+    -bool infiniteRepeating;
+    -int repeatingTime;
+    -float fireInterval;
+    -int projectileType = -1;
+}
+
+interface IPunObservable
+{
+    +void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+}
+
+interface IDamageable
+{
+    +void TakeDamage(Vector3 hitPoint, float damage, float knockbackForce)
+}
+
+note top of Projectile_SO
+    Projectile의 정보를 가지고 있는 ScriptableObject입니다.
+end note
+
+note top of ProjectileDispenser_SO
+    ProjectileDispenser의 정보를 가지고 있는 ScriptableObject입니다.
+end note
+
+
+IDamageable <|-- Player
+IPunObservable <|-- Player
+
+Projectile <-- Projectile_SO
+ProjectileDispenser <-- ProjectileDispenser_SO
+
+Player *-- GrapplingHook
+Player *-- Inventory
+Player *-- PlayerCamera
+Player *-- PlayerInput
+
+@enduml

@@ -8,7 +8,7 @@
 ## Our Game
 ### Youtube
 
-[![Alone Or Together](https://www.youtube.com/watch?v=gvBp5dKf-1s/0.jpg)](https://www.youtube.com/watch?v=gvBp5dKf-1s)
+[![Alone Or Together](https://img.youtube.com/vi/gvBp5dKf-1s/0.jpg)](https://www.youtube.com/watch?v=gvBp5dKf-1s)
 
 ### Genres
 

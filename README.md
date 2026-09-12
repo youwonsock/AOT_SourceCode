@@ -69,7 +69,7 @@ UniTask로 그래플링과 사운드 반환처럼 시간 흐름이 필요한 작
 
 ## 클래스 구조 UML
 
-클래스 구조 원본은 [`UML.plantuml`](UML.plantuml)에서 확인할 수 있습니다.
+전체 클래스 구조 원본은 [`UML.plantuml`](UML.plantuml)에서 확인할 수 있으며, 아래 이미지는 플레이어 중심의 핵심 관계만 간결하게 정리한 UML입니다.
 
 핵심 관계는 다음과 같습니다.
 
@@ -79,7 +79,7 @@ UniTask로 그래플링과 사운드 반환처럼 시간 흐름이 필요한 작
 - `ProjectileDispenser` → `Projectile_SO`, `ObjectPool`, `Projectile`
 - `GameManager`, `UpdateManager`, `AudioManager` → 전역 게임 흐름과 공통 서비스 관리
 
-> **UML 이미지 플레이스홀더** — `UML.plantuml` 렌더링 이미지 추가 예정
+<img src="Docs/Images/core-player-uml.svg" alt="Alone Or Together 핵심 플레이어 클래스 UML" width="90%">
 
 ### 클래스별 역할
 
@@ -111,7 +111,7 @@ UniTask로 그래플링과 사운드 반환처럼 시간 흐름이 필요한 작
 - `Scene_Load`가 네트워크 플레이 흐름에 맞춰 씬 전환을 처리합니다.
 - 게임 콘텐츠는 `PhotonView`, RPC와 상태 직렬화를 사용해 클라이언트 간 상태를 공유합니다.
 
-> **UML 플레이스홀더** — Photon 접속 → 방 생성·입장 → 대기실 → 씬 전환 흐름을 나타내는 시퀀스 다이어그램 추가 예정
+<img src="Docs/Images/photon-multiplayer-flow-uml.svg" alt="Photon 멀티플레이 진입 흐름 시퀀스 UML" width="90%">
 
 ### 플레이어 이동·입력·카메라
 
@@ -177,7 +177,39 @@ UniTask로 그래플링과 사운드 반환처럼 시간 흐름이 필요한 작
 - 차량과 AudioManager 등 반복 갱신이 필요한 기능이 공통 호출 흐름을 사용합니다.
 - 구독과 해제 메서드를 분리해 컴포넌트 생명주기에 맞춰 관리합니다.
 
-> **코드 샘플 플레이스홀더** — `SubscribeToUpdate`·`UnsubscribeFromUpdate`와 중앙 Update 호출 구조를 보여주는 핵심 코드 추가 예정
+핵심 구독·호출 흐름을 발췌한 코드입니다.
+
+```csharp
+// UpdateManager.cs
+private static event Action OnUpdate;
+
+public static void SubscribeToUpdate(Action callback)
+{
+    OnUpdate += callback;
+}
+
+public static void UnsubscribeFromUpdate(Action callback)
+{
+    OnUpdate -= callback;
+}
+
+void Update()
+{
+    if (OnUpdate != null)
+        OnUpdate.Invoke();
+}
+
+// 구독 컴포넌트의 생명주기
+private void OnEnable()
+{
+    UpdateManager.SubscribeToUpdate(UpdateWork);
+}
+
+private void OnDisable()
+{
+    UpdateManager.UnsubscribeFromUpdate(UpdateWork);
+}
+```
 
 ### 발사체 오브젝트 풀
 
@@ -192,7 +224,44 @@ UniTask로 그래플링과 사운드 반환처럼 시간 흐름이 필요한 작
 - 사용이 끝난 발사체는 비활성화한 뒤 해당 Queue로 반환합니다.
 - `Projectile_SO`와 `ProjectileDispenser_SO`로 발사체 설정 데이터를 분리합니다.
 
-> **코드 샘플 플레이스홀더** — `GetProjectile`·`ReturnProjectile`을 중심으로 발사체 대여·반환 흐름을 보여주는 핵심 코드 추가 예정
+발사체 대여·반환 흐름을 발췌한 코드입니다.
+
+```csharp
+public Projectile GetProjectile(int projectileType)
+{
+    if (projectileDict.TryGetValue(projectileType, out var projectileQueue))
+    {
+        Projectile projectile;
+
+        if (projectileQueue.Count > 0)
+            projectile = projectileQueue.Dequeue();
+        else
+            projectile = CreateNewProjectile(projectileType)
+                .GetComponent<Projectile>();
+
+        projectile.gameObject.SetActive(true);
+        projectile.transform.SetParent(null);
+        return projectile;
+    }
+
+    Debug.LogError("ObjectPool.GetProjectile() is fall");
+    return null;
+}
+
+public void ReturnProjectile(Projectile projectile, int projectileType)
+{
+    if (projectileDict.TryGetValue(projectileType, out var projectileQueue))
+    {
+        projectile.gameObject.SetActive(false);
+        projectile.transform.SetParent(transform);
+        projectileQueue.Enqueue(projectile);
+    }
+    else
+    {
+        Debug.LogError("ObjectPool.ReturnProjectile() is fall");
+    }
+}
+```
 
 ### 2인 협동 차량
 

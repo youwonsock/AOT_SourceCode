@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+  <title id="title">Photon Multiplayer Entry Sequence UML</title>
+  <desc id="desc">Sequence from nickname setup through Photon connection, lobby, room, waiting room, and stage transition.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 12 5 L 0 10 Z" fill="#334155"/>
+    </marker>
+    <marker id="return" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 12 5 L 0 10 Z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .participant { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+      .service { fill: #dbeafe; stroke: #2563eb; stroke-width: 2; rx: 8; }
+      .name { font: 700 18px Arial, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .life { stroke: #94a3b8; stroke-width: 1.5; stroke-dasharray: 7 6; }
+      .call { stroke: #334155; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .callback { stroke: #2563eb; stroke-width: 2; stroke-dasharray: 7 5; fill: none; marker-end: url(#return); }
+      .msg { font: 15px Consolas, monospace; fill: #334155; text-anchor: middle; }
+      .note { fill: #fef3c7; stroke: #d97706; stroke-width: 1.5; rx: 6; }
+      .note-text { font: 14px Arial, sans-serif; fill: #92400e; text-anchor: middle; }
+      .title { font: 700 28px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 16px Arial, sans-serif; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="860"/>
+  <text class="title" x="48" y="48">Photon Multiplayer Entry Flow</text>
+  <text class="subtitle" x="48" y="76">Core sequence from nickname setup to synchronized stage loading for a two-player room.</text>
+
+  <rect class="participant" x="42" y="110" width="190" height="56"/>
+  <text class="name" x="137" y="145">Scene_Load</text>
+  <rect class="participant" x="274" y="110" width="190" height="56"/>
+  <text class="name" x="369" y="145">Connect</text>
+  <rect class="service" x="506" y="110" width="190" height="56"/>
+  <text class="name" x="601" y="145">PhotonNetwork</text>
+  <rect class="participant" x="738" y="110" width="190" height="56"/>
+  <text class="name" x="833" y="145">CreateAndJoin</text>
+  <rect class="participant" x="970" y="110" width="190" height="56"/>
+  <text class="name" x="1065" y="145">Waiting_Room</text>
+
+  <line class="life" x1="137" y1="166" x2="137" y2="810"/>
+  <line class="life" x1="369" y1="166" x2="369" y2="810"/>
+  <line class="life" x1="601" y1="166" x2="601" y2="810"/>
+  <line class="life" x1="833" y1="166" x2="833" y2="810"/>
+  <line class="life" x1="1065" y1="166" x2="1065" y2="810"/>
+
+  <path class="call" d="M 137 205 L 601 205"/>
+  <text class="msg" x="369" y="195">LocalPlayer.NickName 설정</text>
+  <rect class="note" x="52" y="226" width="170" height="42"/>
+  <text class="note-text" x="137" y="252">Game_Loading 씬 이동</text>
+
+  <path class="call" d="M 369 300 L 601 300"/>
+  <text class="msg" x="485" y="290">ConnectUsingSettings()</text>
+  <path class="callback" d="M 601 350 L 369 350"/>
+  <text class="msg" x="485" y="340">OnConnectedToMaster()</text>
+  <path class="call" d="M 369 400 L 601 400"/>
+  <text class="msg" x="485" y="390">JoinLobby()</text>
+  <path class="callback" d="M 601 450 L 369 450"/>
+  <text class="msg" x="485" y="440">OnJoinedLobby()</text>
+  <rect class="note" x="284" y="470" width="170" height="42"/>
+  <text class="note-text" x="369" y="496">Game_Lobby 씬 이동</text>
+
+  <path class="call" d="M 833 545 L 601 545"/>
+  <text class="msg" x="717" y="535">CreateRoom() / JoinRoom()</text>
+  <path class="callback" d="M 601 595 L 833 595"/>
+  <text class="msg" x="717" y="585">OnJoinedRoom()</text>
+  <path class="call" d="M 833 645 L 601 645"/>
+  <text class="msg" x="717" y="635">LoadLevel(Game_Waiting_Room)</text>
+
+  <path class="call" d="M 1065 705 L 601 705"/>
+  <text class="msg" x="833" y="695">SetCustomProperties(IsPlayerReady)</text>
+  <path class="call" d="M 1065 765 L 601 765"/>
+  <text class="msg" x="833" y="755">Master: LoadLevel(Stage)</text>
+
+  <rect class="note" x="972" y="792" width="186" height="42"/>
+  <text class="note-text" x="1065" y="818">AutomaticallySyncScene</text>
+</svg>

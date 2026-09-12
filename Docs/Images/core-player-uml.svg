@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Alone Or Together Core Player Class UML</title>
+  <desc id="desc">Player implements IDamageAble and IPunObservable and owns Movement, P_Input, Inventory, and GrapplingHook.</desc>
+  <defs>
+    <marker id="diamond" markerWidth="18" markerHeight="12" refX="16" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 6 L 7 1 L 14 6 L 7 11 Z" fill="#111827"/>
+    </marker>
+    <marker id="triangle" markerWidth="15" markerHeight="15" refX="13" refY="7.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 1 1 L 14 7.5 L 1 14 Z" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 8; }
+      .interface { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; rx: 8; }
+      .head { fill: #e2e8f0; }
+      .head-blue { fill: #dbeafe; }
+      .name { font: 700 20px Arial, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .stereo { font: italic 14px Arial, sans-serif; fill: #1d4ed8; text-anchor: middle; }
+      .member { font: 15px Consolas, monospace; fill: #334155; }
+      .label { font: 14px Arial, sans-serif; fill: #475569; text-anchor: middle; }
+      .line { stroke: #334155; stroke-width: 2; fill: none; }
+      .impl { stroke: #2563eb; stroke-width: 2; stroke-dasharray: 8 6; fill: none; }
+      .divider { stroke: #cbd5e1; stroke-width: 1.5; }
+      .title { font: 700 28px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 16px Arial, sans-serif; fill: #64748b; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="720"/>
+  <text class="title" x="48" y="48">Core Player Class Structure</text>
+  <text class="subtitle" x="48" y="76">Only the gameplay contracts and components directly owned by Player are shown.</text>
+
+  <rect class="interface" x="90" y="125" width="260" height="130"/>
+  <rect class="head-blue" x="91" y="126" width="258" height="56" rx="7"/>
+  <text class="stereo" x="220" y="148">&lt;&lt;interface&gt;&gt;</text>
+  <text class="name" x="220" y="173">IDamageAble</text>
+  <line class="divider" x1="90" y1="182" x2="350" y2="182"/>
+  <text class="member" x="108" y="215">+ TakeDamage(...)</text>
+
+  <rect class="interface" x="850" y="125" width="260" height="130"/>
+  <rect class="head-blue" x="851" y="126" width="258" height="56" rx="7"/>
+  <text class="stereo" x="980" y="148">&lt;&lt;interface&gt;&gt;</text>
+  <text class="name" x="980" y="173">IPunObservable</text>
+  <line class="divider" x1="850" y1="182" x2="1110" y2="182"/>
+  <text class="member" x="868" y="215">+ OnPhotonSerializeView(...)</text>
+
+  <rect class="box" x="430" y="112" width="340" height="175"/>
+  <rect class="head" x="431" y="113" width="338" height="54" rx="7"/>
+  <text class="name" x="600" y="147">Player</text>
+  <line class="divider" x1="430" y1="167" x2="770" y2="167"/>
+  <text class="member" x="450" y="198">- health : float</text>
+  <text class="member" x="450" y="224">- networkPosition : Vector3</text>
+  <line class="divider" x1="430" y1="239" x2="770" y2="239"/>
+  <text class="member" x="450" y="268">+ Respawn()</text>
+
+  <path class="impl" d="M 430 170 L 350 170" marker-end="url(#triangle)"/>
+  <path class="impl" d="M 770 170 L 850 170" marker-end="url(#triangle)"/>
+  <text class="label" x="390" y="154">implements</text>
+  <text class="label" x="810" y="154">implements</text>
+
+  <path class="line" d="M 600 287 L 600 345" marker-start="url(#diamond)"/>
+  <path class="line" d="M 180 345 L 1020 345"/>
+  <path class="line" d="M 180 345 L 180 405"/>
+  <path class="line" d="M 460 345 L 460 405"/>
+  <path class="line" d="M 740 345 L 740 405"/>
+  <path class="line" d="M 1020 345 L 1020 405"/>
+  <text class="label" x="600" y="329">composition</text>
+
+  <rect class="box" x="55" y="405" width="250" height="205"/>
+  <rect class="head" x="56" y="406" width="248" height="52" rx="7"/>
+  <text class="name" x="180" y="439">P_Input</text>
+  <line class="divider" x1="55" y1="458" x2="305" y2="458"/>
+  <text class="member" x="72" y="491">- move : Vector2</text>
+  <text class="member" x="72" y="517">- jump : bool</text>
+  <line class="divider" x1="55" y1="535" x2="305" y2="535"/>
+  <text class="member" x="72" y="567">+ OnMove(...)</text>
+  <text class="member" x="72" y="593">+ OnJump(...)</text>
+
+  <rect class="box" x="335" y="405" width="250" height="205"/>
+  <rect class="head" x="336" y="406" width="248" height="52" rx="7"/>
+  <text class="name" x="460" y="439">Movement</text>
+  <line class="divider" x1="335" y1="458" x2="585" y2="458"/>
+  <text class="member" x="352" y="491">- walkSpeed : float</text>
+  <text class="member" x="352" y="517">- jumpForce : float</text>
+  <line class="divider" x1="335" y1="535" x2="585" y2="535"/>
+  <text class="member" x="352" y="567">+ Move(P_Input)</text>
+  <text class="member" x="352" y="593">- Jump(P_Input)</text>
+
+  <rect class="box" x="615" y="405" width="250" height="205"/>
+  <rect class="head" x="616" y="406" width="248" height="52" rx="7"/>
+  <text class="name" x="740" y="439">Inventory</text>
+  <line class="divider" x1="615" y1="458" x2="865" y2="458"/>
+  <text class="member" x="632" y="491">- items : List&lt;Item&gt;</text>
+  <text class="member" x="632" y="517">- inventorySize : int</text>
+  <line class="divider" x1="615" y1="535" x2="865" y2="535"/>
+  <text class="member" x="632" y="567">+ AddItemToInventory()</text>
+  <text class="member" x="632" y="593">+ UseItem()</text>
+
+  <rect class="box" x="895" y="405" width="250" height="205"/>
+  <rect class="head" x="896" y="406" width="248" height="52" rx="7"/>
+  <text class="name" x="1020" y="439">GrapplingHook</text>
+  <line class="divider" x1="895" y1="458" x2="1145" y2="458"/>
+  <text class="member" x="912" y="491">- destination : Vector3</text>
+  <text class="member" x="912" y="517">- onGrappling : bool</text>
+  <line class="divider" x1="895" y1="535" x2="1145" y2="535"/>
+  <text class="member" x="912" y="567">+ Grappling(...)</text>
+  <text class="member" x="912" y="593">- SetGrapplingPoint()</text>
+
+  <text class="subtitle" x="48" y="676">표기: ◆ composition · ┄▷ interface implementation</text>
+</svg>
